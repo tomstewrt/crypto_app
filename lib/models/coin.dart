@@ -2,7 +2,7 @@ import 'dart:ui';
 
 import '../helpers/color_helper.dart';
 
-class CryptoCoin {
+class Coin {
   final String uuid;
   final String symbol;
   final String name;
@@ -14,7 +14,7 @@ class CryptoCoin {
   final List<double> sparkline;
   final double volume24h;
 
-  CryptoCoin(
+  Coin(
     this.uuid,
     this.symbol,
     this.name,
@@ -27,7 +27,7 @@ class CryptoCoin {
     this.volume24h,
   );
 
-  CryptoCoin.fromJson(Map<String, dynamic> data)
+  Coin.fromJson(Map<String, dynamic> data)
       : uuid = data['uuid'],
         symbol = data['symbol'],
         name = data['name'],

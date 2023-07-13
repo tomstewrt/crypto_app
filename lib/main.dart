@@ -1,8 +1,12 @@
-import 'package:crypto_app/pages/home_page.dart';
+import 'package:crypto_app/controllers/coins_controller.dart';
+import 'package:crypto_app/views/home_view.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:get/get.dart';
 
-void main() {
+Future<void> main() async {
+  await dotenv.load(fileName: '.env');
   runApp(const ProviderScope(child: MyApp()));
 }
 
@@ -11,7 +15,10 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    // put controllers
+    Get.put(CoinsController());
+
+    return GetMaterialApp(
       title: 'Crypto App',
       theme: ThemeData(
         primarySwatch: Colors.blue,
@@ -23,7 +30,7 @@ class MyApp extends StatelessWidget {
         ),
         fontFamily: 'NotoSans',
       ),
-      home: const HomePage(),
+      home: HomeView(),
     );
   }
 }

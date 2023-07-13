@@ -1,10 +1,14 @@
-import 'package:fl_chart/fl_chart.dart';
+// import 'package:fl_chart/fl_chart.dart';
+import 'package:crypto_app/controllers/coins_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import '../widgets/hot_coin_card.dart';
 
-class HomePage extends StatelessWidget {
-  const HomePage({super.key});
+class HomeView extends StatelessWidget {
+  final CoinsController coinsController = Get.find();
+
+  HomeView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -45,10 +49,25 @@ class HomePage extends StatelessWidget {
               ),
               // Top 25 coins section
               Text(
-                'Top Coins',
+                'Top Market Cap',
                 style: Theme.of(context).textTheme.titleSmall,
               ),
-              ListView.builder(),
+              Obx(
+                () {
+                  final topCoins = coinsController.topMarketCapCoins;
+                  return ListView.builder(
+                    itemCount: topCoins.length,
+                    itemBuilder: (ctx, index) {
+                      return ListTile(
+                        leading: Image.network(topCoins[index].iconUrl),
+                        title: Text(topCoins[index].name),
+                        subtitle: Text(topCoins[index].symbol),
+                        trailing: Text(topCoins[index].price.toString()),
+                      );
+                    },
+                  );
+                },
+              ),
             ],
           ),
         ),
