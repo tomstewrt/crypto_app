@@ -1,18 +1,20 @@
 import 'dart:ui';
 
+import 'package:crypto_app/helpers/common_utils.dart';
+
 import '../helpers/color_helper.dart';
 
 class Coin {
   final String uuid;
   final String symbol;
   final String name;
-  final Color color;
+  final Color? color;
   final String iconUrl;
-  final double marketCap;
-  final double price;
+  final String marketCap;
+  final String price;
   final String change;
-  final List<double> sparkline;
-  final double volume24h;
+  final List<String> sparkline;
+  final String volume24h;
 
   Coin(
     this.uuid,
@@ -31,11 +33,13 @@ class Coin {
       : uuid = data['uuid'],
         symbol = data['symbol'],
         name = data['name'],
-        color = ColorHelper.colorFromHex(data['color']),
+        color = data['color'] == null
+            ? null
+            : ColorHelper.colorFromHex(data['color']),
         iconUrl = data['iconUrl'],
-        marketCap = data['marketCap'],
-        price = data['price'],
+        marketCap = cleanupPriceString(data['marketCap']),
+        price = cleanupPriceString(data['price']),
         change = data['change'],
         sparkline = List.castFrom(data['sparkline']),
-        volume24h = data['volume24h'];
+        volume24h = cleanupPriceString(data['24hVolume']);
 }

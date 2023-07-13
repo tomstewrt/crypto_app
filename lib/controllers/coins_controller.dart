@@ -8,8 +8,15 @@ enum FilterType {
   twentyFourHourChange,
 }
 
+enum SortOrder {
+  ascending,
+  descending,
+}
+
 class CoinsController extends GetxController {
-  List<Coin> topMarketCapCoins = [];
+  Rx<FilterType> filterType = FilterType.marketCap.obs;
+  Rx<SortOrder> sortOrder = SortOrder.descending.obs;
+  RxList<Coin> topMarketCapCoins = RxList<Coin>();
 
   @override
   Future<void> onInit() async {
@@ -21,7 +28,7 @@ class CoinsController extends GetxController {
     topMarketCapCoins.clear();
 
     try {
-      topMarketCapCoins = await CoinsApi.fetchTopMarketCapCoins();
+      topMarketCapCoins.value = await CoinsApi.fetchTopMarketCapCoins();
     } catch (e) {
       Get.snackbar('Error', e.toString());
     }

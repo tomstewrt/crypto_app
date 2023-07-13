@@ -8,26 +8,30 @@ import '../../../core/network/endpoints.dart';
 import '../../models/coin.dart';
 
 class CoinsApi {
-  static Options coinGeckoOptions = Options(
+  static Options coinRankingOptions = Options(
     headers: {
       'X-RapidAPI-Key': dotenv.env['RAPIDAPI_KEY'],
-      'X-RapidAPI-Host': 'coingecko.p.rapidapi.com',
+      'X-RapidAPI-Host': 'coinranking1.p.rapidapi.co',
     },
   );
 
-  static Future<List<Coin>> fetchTopMarketCapCoins({int page = 1}) async {
+  static Future<List<Coin>> fetchTopMarketCapCoins() async {
     try {
       final res = await Dio().get(
         Endpoints.kTopMarketCap,
-        options: coinGeckoOptions,
+        options: coinRankingOptions,
         queryParameters: {
-          'vs_currency': 'usd',
-          'order': 'market_cap_desc',
-          'page': page,
+          'referenceCurrencyUuid': 'yhjMzLPhuIDl',
+          'timePeriod': '24h',
+          'tiers[0]': '1',
+          'orderBy': 'marketCap',
+          'orderDirection': 'desc',
+          'limit': 50,
+          'offset': 0,
         },
       );
       List<Coin> coins = [];
-      final coinData = res.data['coins'];
+      final coinData = res.data['data']['coins'];
       for (var i = 0; i < coinData.length; i++) {
         coins.add(Coin.fromJson(coinData[i]));
       }

@@ -1,5 +1,5 @@
 class Endpoints {
   static const String kTopMarketCap =
-      'https://coingecko.p.rapidapi.com/coins/markets';
+      'https://coinranking1.p.rapidapi.com/coins';
   static const String kTopCoins = '';
 }
